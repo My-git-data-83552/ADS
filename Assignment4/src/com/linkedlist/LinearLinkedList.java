@@ -12,7 +12,7 @@ public class LinearLinkedList {
 		}
 	}
 
-	private Node head;
+	private Node head; //did with only tail before 
 	private Node tail;
 
 	public LinearLinkedList() {
@@ -28,7 +28,7 @@ public class LinearLinkedList {
 	public void display() {
 		Node trav = head;
 		while (trav != null) {
-			System.out.print(trav.data+" ");
+			System.out.print(trav.data + " ");
 			trav = trav.next;
 		}
 		System.out.println();
@@ -82,22 +82,68 @@ public class LinearLinkedList {
 
 	public void addAfterNode(int value, int pos) {
 		Node newnode = new Node(value);
-		if(pos<1)
+		if (pos < 1)
 			return;
-		
+
 		Node trav = head;
 		if (isEmpty())
 			tail = head = newnode;
-		else if(pos==1)
+		else if (pos == 1)
 			addFirst(value);
 		else {
-			for (int i = 1; i < pos; i++) {
+			for (int i = 1; i < pos && trav.next != null; i++) {
 				trav = trav.next;
-				if(trav==head && trav.next==null )
+				if (trav == head)
 					return;
 			}
 			newnode.next = trav.next;
 			trav.next = newnode;
+			if (trav.next == null)
+				tail = newnode;
 		}
+	}
+
+	public void deleteAfterNode(int pos) {
+
+		Node trav = head;
+		if (pos < 1)
+			return;
+
+		if (isEmpty())
+			return;
+		else if (pos == 1)
+			deleteFirst();
+		else {
+			for (int i = 1; i < pos && trav.next != null; i++)
+				trav = trav.next;
+			if (trav.next == null)
+				deleteLast();
+			else
+				trav.next = trav.next.next;
+
+		}
+	}
+
+	public void addSecondLast(int value) {
+		Node newnode = new Node(value);
+		Node trav = head;
+		while (trav.next.next != null)
+			trav = trav.next;
+		newnode.next = trav.next;
+		trav.next = newnode;
+		if (trav.next == null)
+			tail = newnode;
+	}
+	
+
+	public Node getHead() {
+		return head;
+	}
+
+	public void displayReverse(Node trav) {
+		if (trav == null)
+			return;
+		displayReverse(trav.next);
+		System.out.print(trav.data + " ");
 	}
 }
