@@ -28,4 +28,5 @@ public class Deque {
 	public int peek_front() {
 		return l1.getHeadData();
 	}
+	
 }
